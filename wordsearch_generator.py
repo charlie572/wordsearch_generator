@@ -199,14 +199,22 @@ def insert_words(grid, words):
     :param words: The words to insert
     :type words: list
     """
-    pass
+    # This function uses a recursive backtracking method. The base case is when there are no more words to insert. It
+    # backtracks when it has gone through all of possible ways to insert the next word.
+
+    if len(words) == 0:
+        return grid
+
+    for temp_grid in iterate_word_spaces(grid, words[0]):
+        temp_grid = insert_words(temp_grid, words[1:])
+        if temp_grid is not None:
+            return temp_grid
+
+    return None  # There are no possible ways to insert this word, so we backtrack.
 
 
 def main():
-    grid = create_empty_grid(4, 4)
-    for other_grid in iterate_word_spaces(grid, "cat"):
-        print(grid_to_str(other_grid))
-        print()
+    pass
 
 
 if __name__ == "__main__":
