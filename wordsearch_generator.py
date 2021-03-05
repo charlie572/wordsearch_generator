@@ -280,11 +280,3 @@ def insert_words(grid, words):
             return temp_grid
 
     return None  # There are no possible ways to insert this word, so we backtrack.
-
-
-def main():
-    pass
-
-
-if __name__ == "__main__":
-    main()
