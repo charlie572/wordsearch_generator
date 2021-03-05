@@ -158,5 +158,52 @@ class InsertWordsTestCase(unittest.TestCase):
         self.assertEqual(expected, grid)
 
 
+class IterateWordSpacesTestCase(unittest.TestCase):
+    def test_normal(self):
+        grid = [[None] * 4 for _ in range(4)]
+        expected_grids = [
+            [['c', 'a', 't', None],
+             [None] * 4,
+             [None] * 4,
+             [None] * 4],
+            [[None, 'c', 'a', 't'],
+             [None] * 4,
+             [None] * 4,
+             [None] * 4],
+            [[None] * 4,
+             [None] * 4,
+             [None] * 4,
+             ['c', 'a', 't', None]],
+            [[None] * 4,
+             [None] * 4,
+             [None] * 4,
+             [None, 'c', 'a', 't']],
+            [[None, None, None, 'c'],
+             [None, None, None, 'a'],
+             [None, None, None, 't'],
+             [None] * 4],
+            [[None] * 4,
+             [None, None, None, 'c'],
+             [None, None, None, 'a'],
+             [None, None, None, 't']]
+        ]
+
+        actual_grids = list(wg.iterate_word_spaces(grid, "cat"))
+
+        for i, expected_grid in enumerate(expected_grids):
+            with self.subTest(msg=f"Check that grid {i} is yielded"):
+                self.assertIn(expected_grid, actual_grids)
+
+    def test_zero_width(self):
+        grid = [[] for _ in range(4)]
+        grids_generated = list(wg.iterate_word_spaces(grid, "cat"))
+        self.assertEqual(0, len(grids_generated))
+
+    def test_zero_height(self):
+        grid = []
+        grids_generated = list(wg.iterate_word_spaces(grid, "cat"))
+        self.assertEqual(0, len(grids_generated))
+
+
 if __name__ == '__main__':
     unittest.main()
