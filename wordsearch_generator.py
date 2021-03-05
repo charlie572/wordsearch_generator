@@ -11,7 +11,7 @@ the blank spaces with random characters.
 All the functions that modify the grid do so in-place unless otherwise stated.
 """
 from copy import deepcopy
-from random import randint
+from random import randint, shuffle
 
 
 def create_empty_grid(width, height):
@@ -172,6 +172,54 @@ def iterate_word_spaces(grid, word):
             if word_fits:
                 yield temp_grid
                 temp_grid = deepcopy(grid)
+
+
+def iterate_word_spaces_randomly(grid, word):
+    """Iterate randomly over the possible ways to insert a word
+
+    This generator yields the grid corresponding to every possible way of inserting the word horizontally or vertically.
+    It doesn't yield any grid where characters are overwritten i.e. the word doesn't fit.
+
+    :param grid: The grid that the word is being inserted into
+    :type grid: list
+    :param word: The word that is being inserted
+    :type word: str
+    """
+    # This function works by generating possible locations for the word, shuffling them, then yielding the corresponding
+    # grids with the word inserted.
+
+    height = len(grid)
+    width = len(grid[0]) if height > 0 else 0
+
+    # generate spaces
+    horizontal_spaces = []
+    for x in range(width - len(word) + 1):
+        for y in range(height):
+            horizontal_spaces.append((x, y))
+
+    vertical_spaces = []
+    for y in range(height - len(word) + 1):
+        for x in range(width):
+            vertical_spaces.append((x, y))
+
+    # shuffle spaces
+    shuffle(horizontal_spaces)
+    shuffle(vertical_spaces)
+
+    # yields grids
+
+    temp_grid = deepcopy(grid)
+    for x, y in horizontal_spaces:
+        word_fits = insert_word_horizontally(temp_grid, word, x, y)
+        if word_fits:
+            yield temp_grid
+            temp_grid = deepcopy(grid)  # reset temp_grid so the next word location can be generated
+
+    for x, y in vertical_spaces:
+        word_fits = insert_word_vertically(temp_grid, word, x, y)
+        if word_fits:
+            yield temp_grid
+            temp_grid = deepcopy(grid)
 
 
 def insert_words_randomly(grid, words):
