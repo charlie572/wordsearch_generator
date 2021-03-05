@@ -1,4 +1,6 @@
 import unittest
+from copy import deepcopy
+
 import wordsearch_generator as wg
 from random import seed
 
@@ -74,6 +76,86 @@ class FillBlanksRandomlyTestCase(unittest.TestCase):
             for c, element in enumerate(row):
                 with self.subTest(msg=f"element at (c, r) is None"):
                     self.assertTrue(element is not None)
+
+
+class InsertWordsTestCase(unittest.TestCase):
+    def test_horizontal_normal(self):
+        grid = [[None] * 4 for _ in range(4)]
+        expected = [['b', 'a', 'c', 'k'],
+                    [None] * 4,
+                    [None] * 4,
+                    [None] * 4]
+
+        inserted_correctly = wg.insert_word_horizontally(grid, "back", 0, 0)
+
+        self.assertTrue(inserted_correctly)
+        self.assertEqual(expected, grid)
+
+    def test_vertical_normal(self):
+        grid = [[None] * 4 for _ in range(4)]
+        expected = [['b', None, None, None],
+                    ['a', None, None, None],
+                    ['c', None, None, None],
+                    ['k', None, None, None]]
+
+        inserted_correctly = wg.insert_word_vertically(grid, "back", 0, 0)
+
+        self.assertTrue(inserted_correctly)
+        self.assertEqual(expected, grid)
+
+    def test_horizontal_overlap(self):
+        grid = [['b', None, None, None],
+                ['a', None, None, None],
+                ['c', None, None, None],
+                ['k', None, None, None]]
+        expected = [['b', 'a', 'c', 'k'],
+                    ['a', None, None, None],
+                    ['c', None, None, None],
+                    ['k', None, None, None]]
+
+        inserted_correctly = wg.insert_word_horizontally(grid, "back", 0, 0)
+
+        self.assertTrue(inserted_correctly)
+        self.assertEqual(expected, grid)
+
+    def test_vertical_overlap(self):
+        grid = [['b', 'a', 'c', 'k'],
+                [None] * 4,
+                [None] * 4,
+                [None] * 4]
+        expected = [['b', 'a', 'c', 'k'],
+                    ['a', None, None, None],
+                    ['c', None, None, None],
+                    ['k', None, None, None]]
+
+        inserted_correctly = wg.insert_word_vertically(grid, "back", 0, 0)
+
+        self.assertTrue(inserted_correctly)
+        self.assertEqual(expected, grid)
+
+    def test_horizontal_overwrite(self):
+        grid = [['q', None, None, None],
+                ['a', None, None, None],
+                ['c', None, None, None],
+                ['k', None, None, None]]
+        expected = deepcopy(grid)
+
+        inserted_correctly = wg.insert_word_horizontally(grid, "back", 0, 0)
+
+        self.assertFalse(inserted_correctly)
+        self.assertEqual(expected, grid)
+
+    def test_vertical_overwrite(self):
+        grid = [['q', 'a', 'c', 'k'],
+                [None] * 4,
+                [None] * 4,
+                [None] * 4]
+        expected = deepcopy(grid)
+
+        inserted_correctly = wg.insert_word_vertically(grid, "back", 0, 0)
+
+        self.assertFalse(inserted_correctly)
+        self.assertEqual(expected, grid)
 
 
 if __name__ == '__main__':
