@@ -77,6 +77,9 @@ def insert_word_horizontally(grid, word, x, y):
     If the word would overwrite any characters that are already in the grid, then the word doesn't fit into this space.
     The function returns True if the word was successfully inserted.
 
+    A word will still be inserted if it overlaps another word without overwriting any letters i.e the words can cross at
+    a common letter.
+
     This function does not check if a word is out of the bounds of the grid.
 
     :param grid: The grid to insert the word into
@@ -108,6 +111,9 @@ def insert_word_vertically(grid, word, x, y):
 
     If the word would overwrite any characters that are already in the grid, then the word doesn't fit into this space.
     The function returns True if the word was successfully inserted.
+
+    A word will still be inserted if it overlaps another word without overwriting any letters i.e the words can cross at
+    a common letter.
 
     This function does not check if a word is out of the bounds of the grid.
 
