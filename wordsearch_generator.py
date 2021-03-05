@@ -70,6 +70,70 @@ def fill_blanks_randomly(grid):
                 row[i] = get_random_char()
 
 
+def insert_word_horizontally(grid, word, x, y):
+    """Insert a word horizontally into a grid
+
+    If the word would overwrite any characters that are already in the grid, then the word doesn't fit into this space.
+    The function returns True if the word was successfully inserted.
+
+    This function does not check if a word is out of the bounds of the grid.
+
+    :param grid: The grid to insert the word into
+    :type grid: list
+    :param word: The word to insert
+    :type word: str
+    :param x: The x coordinate of the first letter (the first column has x coordinate 0)
+    :type x: int
+    :param y: The y coordinate of the first letter (the first row has y coordinate 0)
+    :type y: int
+    :return: True if the word was successfully inserted, else False
+    :rtype: bool
+    """
+    # check if the word fits in this space
+    for i in range(len(word)):
+        grid_char = grid[y][x + i]
+        if grid_char is not None and grid_char != word[i]:
+            return False  # the word doesn't fit into this space
+
+    # insert the word
+    for i in range(len(word)):
+        grid[y][x + i] = word[i]
+
+    return True
+
+
+def insert_word_vertically(grid, word, x, y):
+    """Insert a word vertically into a grid
+
+    If the word would overwrite any characters that are already in the grid, then the word doesn't fit into this space.
+    The function returns True if the word was successfully inserted.
+
+    This function does not check if a word is out of the bounds of the grid.
+
+    :param grid: The grid to insert the word into
+    :type grid: list
+    :param word: The word to insert
+    :type word: str
+    :param x: The x coordinate of the first letter (the first column has x coordinate 0)
+    :type x: int
+    :param y: The y coordinate of the first letter (the first row has y coordinate 0)
+    :type y: int
+    :return: True if the word was successfully inserted, else False
+    :rtype: bool
+    """
+    # check if the word fits in this space
+    for i in range(len(word)):
+        grid_char = grid[y + i][x]
+        if grid_char is not None and grid_char != word[i]:
+            return False  # the word doesn't fit into this space
+
+    # insert the word
+    for i in range(len(word)):
+        grid[y + i][x] = word[i]
+
+    return True
+
+
 def insert_words_randomly(grid, words):
     """Insert words randomly into a grid
 
