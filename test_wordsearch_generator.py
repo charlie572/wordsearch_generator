@@ -204,6 +204,18 @@ class IterateWordSpacesTestCase(unittest.TestCase):
         grids_generated = list(wg.iterate_word_spaces(grid, "cat"))
         self.assertEqual(0, len(grids_generated))
 
+    def test_iterate_word_spaces_randomly(self):
+        """Test that iterate_word_spaces_randomly produces the same output as iterate_word_spaces (not necessarily in
+        the same order)"""
+        grid = [[None] * 4 for _ in range(4)]
+
+        non_random_grids = wg.iterate_word_spaces(grid, "cat")
+        random_grids = list(wg.iterate_word_spaces_randomly(grid, "cat"))
+
+        for i, grid in enumerate(non_random_grids):
+            with self.subTest(msg=f"Test grid {i} is present"):
+                self.assertIn(grid, random_grids)
+
 
 class InsertAllWordsTestCase(unittest.TestCase):
     def test_insert_words_succeeds(self):
