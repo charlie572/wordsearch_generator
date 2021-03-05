@@ -74,7 +74,7 @@ class FillBlanksRandomlyTestCase(unittest.TestCase):
         wg.fill_blanks_randomly(grid)
         for r, row in enumerate(grid):
             for c, element in enumerate(row):
-                with self.subTest(msg=f"element at (c, r) is None"):
+                with self.subTest(msg=f"Check that element at ({c}, {r}) is not None"):
                     self.assertTrue(element is not None)
 
 
