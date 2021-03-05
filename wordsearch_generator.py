@@ -8,7 +8,7 @@ To create a wordsearch, create an empty grid using the create_empty_grid() funct
 insert_words_randomly() or insert_words() functions to populate the grid. Finally, use fill_blanks_randomly() to fill in
 the blank spaces with random characters.
 
-All the functions that modify the grid do so in-place.
+All the functions that modify the grid do so in-place unless otherwise stated.
 """
 from copy import deepcopy
 from random import randint
@@ -175,7 +175,8 @@ def insert_words_randomly(grid, words):
     not overwrite each other. However, anything that is already in the grid may be overwritten, so the grid should be
     empty.
 
-    This function words in-place.
+    This function does not work in-place. It returns the new grid with the words inserted, or returns None is there is
+    no solution.
 
     :param grid: An empty grid to insert the words into
     :type grid: list
@@ -192,7 +193,8 @@ def insert_words(grid, words):
     will not overwrite each other. However, anything that is already in the grid may be overwritten, so the grid should
     be empty.
 
-    This function words in-place.
+    This function does not work in-place. It returns the new grid with the words inserted, or returns None is there is
+    no solution.
 
     :param grid: An empty grid to insert the words into
     :type grid: list
