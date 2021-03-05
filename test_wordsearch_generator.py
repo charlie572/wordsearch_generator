@@ -78,7 +78,7 @@ class FillBlanksRandomlyTestCase(unittest.TestCase):
                     self.assertTrue(element is not None)
 
 
-class InsertWordsTestCase(unittest.TestCase):
+class InsertSingleWordsTestCase(unittest.TestCase):
     def test_horizontal_normal(self):
         grid = [[None] * 4 for _ in range(4)]
         expected = [['b', 'a', 'c', 'k'],
@@ -203,6 +203,14 @@ class IterateWordSpacesTestCase(unittest.TestCase):
         grid = []
         grids_generated = list(wg.iterate_word_spaces(grid, "cat"))
         self.assertEqual(0, len(grids_generated))
+
+
+class InsertAllWordsTestCase(unittest.TestCase):
+    def test_insert_words_succeeds(self):
+        grid = [[None] * 4 for _ in range(4)]
+        words = ["cat", "mad", "stun", "put", "ban"]
+        generated_grid = wg.insert_words(grid, words)
+        self.assertTrue(generated_grid is not None)
 
 
 if __name__ == '__main__':
