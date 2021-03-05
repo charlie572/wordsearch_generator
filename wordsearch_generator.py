@@ -165,7 +165,7 @@ def iterate_word_spaces(grid, word):
                 yield temp_grid
                 temp_grid = deepcopy(grid)  # reset temp_grid so the next word location can be generated
 
-    # horizontal spaces
+    # vertical spaces
     for y in range(height - len(word) + 1):
         for x in range(width):
             word_fits = insert_word_vertically(temp_grid, word, x, y)
