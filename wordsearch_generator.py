@@ -126,7 +126,7 @@ def insert_word_vertically(grid, word, x, y):
     for i in range(len(word)):
         grid_char = grid[y + i][x]
         if grid_char is not None and grid_char != word[i]:
-            return False  # the word doesn't fit into this space
+            return False
 
     # insert the word
     for i in range(len(word)):
