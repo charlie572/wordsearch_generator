@@ -239,7 +239,18 @@ def insert_words_randomly(grid, words):
     :return: The new grid with the words inserted
     :rtype: list
     """
-    pass
+    # This function works the same as insert_words, but it uses iterate_word_spaces_randomly instead of
+    # iterate_word_spaces.
+
+    if len(words) == 0:
+        return grid
+
+    for temp_grid in iterate_word_spaces_randomly(grid, words[0]):
+        temp_grid = insert_words(temp_grid, words[1:])
+        if temp_grid is not None:
+            return temp_grid
+
+    return None  # There are no possible ways to insert this word, so we backtrack.
 
 
 def insert_words(grid, words):
