@@ -224,6 +224,12 @@ class InsertAllWordsTestCase(unittest.TestCase):
         generated_grid = wg.insert_words(grid, words)
         self.assertTrue(generated_grid is not None)
 
+    def test_insert_words_randomly_succeeds(self):
+        grid = [[None] * 4 for _ in range(4)]
+        words = ["cat", "mad", "stun", "put", "ban"]
+        generated_grid = wg.insert_words_randomly(grid, words)
+        self.assertTrue(generated_grid is not None)
+
 
 if __name__ == '__main__':
     unittest.main()
