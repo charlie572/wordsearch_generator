@@ -10,6 +10,7 @@ the blank spaces with random characters.
 
 All the functions that modify the grid do so in-place.
 """
+from copy import deepcopy
 from random import randint
 
 
@@ -134,6 +135,39 @@ def insert_word_vertically(grid, word, x, y):
     return True
 
 
+def iterate_word_spaces(grid, word):
+    """Iterate over the possible ways to insert a word
+
+    This generator yields the grid corresponding to every possible way of inserting the word horizontally or vertically.
+    It doesn't yield any grid where characters are overwritten i.e. the word doesn't fit.
+
+    :param grid: The grid that the word is being inserted into
+    :type grid: list
+    :param word: The word that is being inserted
+    :type word: str
+    """
+    height = len(grid)
+    width = len(grid[0]) if height > 0 else 0
+
+    temp_grid = deepcopy(grid)
+
+    # horizontal spaces
+    for x in range(width - len(word) + 1):
+        for y in range(height):
+            word_fits = insert_word_horizontally(temp_grid, word, x, y)
+            if word_fits:
+                yield temp_grid
+                temp_grid = deepcopy(grid)
+
+    # horizontal spaces
+    for y in range(height - len(word) + 1):
+        for x in range(width):
+            word_fits = insert_word_vertically(temp_grid, word, x, y)
+            if word_fits:
+                yield temp_grid
+                temp_grid = deepcopy(grid)
+
+
 def insert_words_randomly(grid, words):
     """Insert words randomly into a grid
 
@@ -169,7 +203,10 @@ def insert_words(grid, words):
 
 
 def main():
-    pass
+    grid = create_empty_grid(4, 4)
+    for other_grid in iterate_word_spaces(grid, "cat"):
+        print(grid_to_str(other_grid))
+        print()
 
 
 if __name__ == "__main__":
