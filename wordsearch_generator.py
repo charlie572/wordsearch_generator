@@ -191,35 +191,33 @@ def iterate_word_spaces_randomly(grid, word):
     height = len(grid)
     width = len(grid[0]) if height > 0 else 0
 
-    # generate spaces
-    horizontal_spaces = []
+    # ************** generate spaces ****************
+
+    # horizontal spaces
+    spaces = []
     for x in range(width - len(word) + 1):
         for y in range(height):
-            horizontal_spaces.append((x, y))
+            spaces.append((x, y, True))
 
-    vertical_spaces = []
+    # vertical spaces
     for y in range(height - len(word) + 1):
         for x in range(width):
-            vertical_spaces.append((x, y))
+            spaces.append((x, y, False))
 
-    # shuffle spaces
-    shuffle(horizontal_spaces)
-    shuffle(vertical_spaces)
+    # ************** shuffle spaces ****************
+    shuffle(spaces)
 
-    # yields grids
-
+    # **************** yield grids *********************
     temp_grid = deepcopy(grid)
-    for x, y in horizontal_spaces:
-        word_fits = insert_word_horizontally(temp_grid, word, x, y)
+    for x, y, horizontal in spaces:
+        if horizontal:
+            word_fits = insert_word_horizontally(temp_grid, word, x, y)
+        else:
+            word_fits = insert_word_vertically(temp_grid, word, x, y)
+
         if word_fits:
             yield temp_grid
             temp_grid = deepcopy(grid)  # reset temp_grid so the next word location can be generated
-
-    for x, y in vertical_spaces:
-        word_fits = insert_word_vertically(temp_grid, word, x, y)
-        if word_fits:
-            yield temp_grid
-            temp_grid = deepcopy(grid)
 
 
 def insert_words_randomly(grid, words):
@@ -246,7 +244,7 @@ def insert_words_randomly(grid, words):
         return grid
 
     for temp_grid in iterate_word_spaces_randomly(grid, words[0]):
-        temp_grid = insert_words(temp_grid, words[1:])
+        temp_grid = insert_words_randomly(temp_grid, words[1:])
         if temp_grid is not None:
             return temp_grid
 
