@@ -182,6 +182,8 @@ def insert_words_randomly(grid, words):
     :type grid: list
     :param words: The words to insert
     :type words: list
+    :return: The new grid with the words inserted
+    :rtype: list
     """
     pass
 
@@ -200,6 +202,8 @@ def insert_words(grid, words):
     :type grid: list
     :param words: The words to insert
     :type words: list
+    :return: The new grid with the words inserted
+    :rtype: list
     """
     # This function uses a recursive backtracking method. The base case is when there are no more words to insert. It
     # backtracks when it has gone through all of possible ways to insert the next word.
