@@ -280,3 +280,59 @@ def insert_words(grid, words):
             return temp_grid
 
     return None  # There are no possible ways to insert this word, so we backtrack.
+
+
+def main():
+    import argparse
+
+    description = """Generate a wordsearch. Only one of --words and words-file should be specified. If --words-file is 
+    specified, then the specified text file will be loaded. The text file should contain the words to put in the wordsearch 
+    on separate lines. If --words is specified, then all the words should be inputted into the command line."""
+
+    parser = argparse.ArgumentParser(description=description)
+
+    parser.add_argument("width", type=int, help="The width of the wordsearch")
+    parser.add_argument("height", type=int, help="The height of the wordsearch")
+    parser.add_argument("--words", type=str, help="The words to appear in the wordsearch", nargs='*')
+    parser.add_argument("--words-file", type=str, help="A text file containing the words to appear in the wordsearch")
+
+    args = parser.parse_args()
+
+    width, height = args.width, args.height
+
+    # error checking
+
+    if width <= 0 or height <= 0:
+        raise ValueError("Width and height must be greater than zero.")
+
+    if args.words is None and args.words_file is None:
+        raise TypeError("No words have been specified")
+    elif args.words is not None and args.words_file is not None:
+        raise TypeError("Only one of --words and --words-file should be specified")
+
+    # get words
+    if args.words_file is not None:
+        # load words from file
+        words = []
+        with open(args.words_file, "r") as f:
+            for line in f.readlines():
+                words.append(line.strip())
+    else:
+        words = args.words
+
+    # generate wordsearch
+
+    grid = create_empty_grid(width, height)
+    grid = insert_words_randomly(grid, words)
+
+    if grid is None:
+        raise RuntimeError("The wordsearch could not be generated. Try using fewer words or larger dimensions.")
+
+    fill_blanks_randomly(grid)
+    output = grid_to_str(grid)
+
+    print(output)
+
+
+if __name__ == "__main__":
+    main()
