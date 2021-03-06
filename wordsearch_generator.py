@@ -289,8 +289,9 @@ def main():
     import argparse
 
     description = """Generate a wordsearch. Only one of --words and words-file should be specified. If --words-file is 
-    specified, then the specified text file will be loaded. The text file should contain the words to put in the wordsearch 
-    on separate lines. If --words is specified, then all the words should be inputted into the command line."""
+    specified, then the specified text file will be loaded. The text file should contain the words to put in the 
+    wordsearch on separate lines. If --words is specified, then all the words should be inputted into the command 
+    line."""
 
     parser = argparse.ArgumentParser(description=description)
 
