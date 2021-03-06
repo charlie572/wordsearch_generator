@@ -9,6 +9,9 @@ insert_words_randomly() or insert_words() functions to populate the grid. Finall
 the blank spaces with random characters.
 
 All the functions that modify the grid do so in-place unless otherwise stated.
+
+This module also has a command-line interface to generate wordsearches. Run `python wordsearch_generator.py -h` to see
+how to use it.
 """
 from copy import deepcopy
 from random import randint, shuffle
