@@ -6,7 +6,6 @@ This project generates wordsearches using a recursive backtracking method.
 
 `wordsearch_generator.py [-h] [--words [WORDS [WORDS ...]]] [--words-file WORDS_FILE] width height`
 
-
 Run wordsearch_generator.py, specifying either a list of words, or a text file.
 If a text file is used, it must contain the words on separate lines.
 
